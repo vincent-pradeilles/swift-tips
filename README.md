@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [Manufacturing cache-efficient versions of pure functions](#manufacturing-cache-efficient-versions-of-pure-functions)
 * [Simplifying complex condition with pattern matching](#simplifying-complex-condition-with-pattern-matching)
 * [Easily generating arrays of data](#easily-generating-arrays-of-data)
 * [Using @autoclosure for cleaner call sites](#using-autoclosure-for-cleaner-call-sites)
@@ -19,6 +20,30 @@ The following is a collection of tips I find to be useful when working with the 
 * [Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Manufacturing cache-efficient versions of pure functions
+
+By capturing a local variable in a returned closure, it is possible to manufacture cache-efficient versions of [pure functions](https://en.wikipedia.org/wiki/Pure_function). Be careful though, this trick only works with non-recursive function!
+
+```swift
+func cached<In: Hashable, Out>(_ f: @escaping (In) -> Out) -> (In) -> Out {
+    var cache = [In: Out]()
+    
+    return { (input: In) -> Out in
+        if let cachedValue = cache[input] {
+            return cachedValue
+        } else {
+            let result = f(input)
+            cache[input] = result
+            return result
+        }
+    }
+}
+
+let cachedCos = cached { (x: Double) in cos(x) }
+
+cachedCos(.pi * 2) // value of cos for 2π is now cached
+```
 
 ## Simplifying complex condition with pattern matching
 
