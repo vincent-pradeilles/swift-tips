@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [Concise syntax for sorting using a KeyPath](#concise-syntax-for-sorting-using-a-keypath)
 * [Manufacturing cache-efficient versions of pure functions](#manufacturing-cache-efficient-versions-of-pure-functions)
 * [Simplifying complex condition with pattern matching](#simplifying-complex-condition-with-pattern-matching)
 * [Easily generating arrays of data](#easily-generating-arrays-of-data)
@@ -20,6 +21,24 @@ The following is a collection of tips I find to be useful when working with the 
 * [Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Concise syntax for sorting using a KeyPath
+
+By using a `KeyPath` along with a	 generic type, a very clean and concise syntax for sorting data can be implemented:
+
+```swift
+extension Sequence {
+    func sorted<T: Comparable>(by attribute: KeyPath<Element, T>) -> [Element] {
+        return sorted(by: { $0[keyPath: attribute] < $1[keyPath: attribute] })
+    }
+}
+
+let data = ["Some", "words", "of", "different", "lengths"]
+
+data.sorted(by: \.count) // ["of", "Some", "words", "lengths", "different"]
+```
+
+If you like this syntax, make sure to checkout [KeyPathKit](https://github.com/vincent-pradeilles/KeyPathKit)!
 
 ## Manufacturing cache-efficient versions of pure functions
 
