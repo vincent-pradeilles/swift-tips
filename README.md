@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [Easier String slicing using ranges](#easier-string-slicing-using-ranges)
 * [Concise syntax for sorting using a KeyPath](#concise-syntax-for-sorting-using-a-keypath)
 * [Manufacturing cache-efficient versions of pure functions](#manufacturing-cache-efficient-versions-of-pure-functions)
 * [Simplifying complex condition with pattern matching](#simplifying-complex-condition-with-pattern-matching)
@@ -21,6 +22,52 @@ The following is a collection of tips I find to be useful when working with the 
 * [Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Easier String slicing using ranges
+
+Subscripting a string with a range can be very cumbersome in Swift 4. Let's face it, no one wants to write lines like `someString[index(startIndex, offsetBy: 0)..<index(startIndex, offsetBy: 10)]` on a regular basis. 
+
+Luckily, with the addition of one clever extension, strings can be sliced as easily as an array 🎉
+
+```swift
+extension String {
+    public subscript(value: CountableClosedRange<Int>) -> Substring {
+        get {
+            return self[index(startIndex, offsetBy: value.lowerBound)...index(startIndex, offsetBy: value.upperBound)]
+        }
+    }
+    
+    public subscript(value: CountableRange<Int>) -> Substring {
+        get {
+            return self[index(startIndex, offsetBy: value.lowerBound)..<index(startIndex, offsetBy: value.upperBound)]
+        }
+    }
+    
+    public subscript(value: PartialRangeUpTo<Int>) -> Substring {
+        get {
+            return self[..<index(startIndex, offsetBy: value.upperBound)]
+        }
+    }
+    
+    public subscript(value: PartialRangeThrough<Int>) -> Substring {
+        get {
+            return self[...index(startIndex, offsetBy: value.upperBound)]
+        }
+    }
+    
+    public subscript(value: PartialRangeFrom<Int>) -> Substring {
+        get {
+            return self[index(startIndex, offsetBy: value.lowerBound)...]
+        }
+    }
+}
+
+let data = "This is a string!"
+
+data[..<4]  // "This"
+data[5..<9] // "is a"
+data[10...] // "string!"
+```
 
 ## Concise syntax for sorting using a KeyPath
 
