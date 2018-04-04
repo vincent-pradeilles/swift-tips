@@ -8,7 +8,7 @@ The following is a collection of tips I find to be useful when working with the 
 * [Easier String slicing using ranges](#easier-string-slicing-using-ranges)
 * [Concise syntax for sorting using a KeyPath](#concise-syntax-for-sorting-using-a-keypath)
 * [Manufacturing cache-efficient versions of pure functions](#manufacturing-cache-efficient-versions-of-pure-functions)
-* [Simplifying complex condition with pattern matching](#simplifying-complex-condition-with-pattern-matching)
+* [Simplifying complex condition with pattern matching](#simplifying-complex-conditions-with-pattern-matching)
 * [Easily generating arrays of data](#easily-generating-arrays-of-data)
 * [Using @autoclosure for cleaner call sites](#using-autoclosure-for-cleaner-call-sites)
 * [Observing new and old value with RxSwift](#observing-new-and-old-value-with-rxswift)
@@ -31,6 +31,8 @@ Any attempt to access an `Array` beyond its bounds will result in a crash. While
 A great thing is that this condition can be encapsulated in a custom `subscript` that will work on any `Collection`:
 
 ```swift
+import Foundation
+
 extension Collection {
     subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
@@ -50,6 +52,8 @@ Subscripting a string with a range can be very cumbersome in Swift 4. Let's face
 Luckily, with the addition of one clever extension, strings can be sliced as easily as arrays 🎉
 
 ```swift
+import Foundation
+
 extension String {
     public subscript(value: CountableClosedRange<Int>) -> Substring {
         get {
@@ -94,6 +98,8 @@ data[10...] // "string!"
 By using a `KeyPath` along with a	 generic type, a very clean and concise syntax for sorting data can be implemented:
 
 ```swift
+import Foundation
+
 extension Sequence {
     func sorted<T: Comparable>(by attribute: KeyPath<Element, T>) -> [Element] {
         return sorted(by: { $0[keyPath: attribute] < $1[keyPath: attribute] })
@@ -112,6 +118,8 @@ If you like this syntax, make sure to checkout [KeyPathKit](https://github.com/v
 By capturing a local variable in a returned closure, it is possible to manufacture cache-efficient versions of [pure functions](https://en.wikipedia.org/wiki/Pure_function). Be careful though, this trick only works with non-recursive function!
 
 ```swift
+import Foundation
+
 func cached<In: Hashable, Out>(_ f: @escaping (In) -> Out) -> (In) -> Out {
     var cache = [In: Out]()
     
@@ -131,7 +139,7 @@ let cachedCos = cached { (x: Double) in cos(x) }
 cachedCos(.pi * 2) // value of cos for 2π is now cached
 ```
 
-## Simplifying complex condition with pattern matching
+## Simplifying complex conditions with pattern matching
 
 When distinguishing between complex boolean conditions, using a `switch` statement along with pattern matching can be more readable than the classic series of `if {} else if {}`.
 
@@ -183,7 +191,6 @@ Using `@autoclosure` enables the compiler to automatically wrap an argument with
 import UIKit
 
 extension UIView {
-    
     class func animate(withDuration duration: TimeInterval, _ animations: @escaping @autoclosure () -> Void) {
         UIView.animate(withDuration: duration, animations: animations)
     }
@@ -192,7 +199,6 @@ extension UIView {
 let view = UIView()
 
 UIView.animate(withDuration: 0.3, view.backgroundColor = .orange)
-
 ```
 
 ## Observing new and old value with RxSwift
@@ -350,7 +356,6 @@ func ||(_ lhs: @escaping (Int) -> Bool, _ rhs: @escaping (Int) -> Bool) -> (Int)
 (firstRange || secondRange)(2) // true
 (firstRange || secondRange)(4) // false
 (firstRange || secondRange)(6) // true
-
 ```
 
 ## Typealiases for functions
@@ -376,6 +381,8 @@ unionRange(4) // false
 ```
 
 ## Encapsulating state within a function
+
+By returning a closure that captures a local variable, it's possible to encapsulate a mutable state within a function.
 
 ```swift
 import Foundation
@@ -429,7 +436,7 @@ MyEnum.allCases // [.first, .second, .third, .fourth]
 
 ## Using map on optional values
 
-The if-let syntax is a great way to deal with optional values in a safe manner, but at times is that prove to be just a little bit to cumbersome. In such cases, using the `Optional.map()` function is a nice way to achieve a shorter code while retaining safeness and readability.
+The if-let syntax is a great way to deal with optional values in a safe manner, but at times it can prove to be just a little bit to cumbersome. In such cases, using the `Optional.map()` function is a nice way to achieve a shorter code while retaining safeness and readability.
 
 
 ```swift

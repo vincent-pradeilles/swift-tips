@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios'>
+    <pages>
+        <page name='01 - Using map on optional values'/>
+        <page name='02 - Generating all cases for an Enum'/>
+        <page name='03 - Encapsulating state within a function'/>
+        <page name='04 - Typealiases for functions'/>
+        <page name='05 - Defining operators on function types'/>
+        <page name='06 - Storing functions rather than values'/>
+        <page name='07 - Implementing the builder pattern with keypaths'/>
+        <page name='08 - Achieving systematic validation of data'/>
+        <page name='09 - Implicit initialization from literal values'/>
+        <page name='10 - Observing new and old value with RxSwift'/>
+        <page name='11 - Using @autoclosure for cleaner call sites'/>
+        <page name='12 - Easily generating arrays of data'/>
+        <page name='13 - Simplifying complex conditions with pattern matching'/>
+        <page name='14 - Manufacturing cache-efficient versions of pure functions'/>
+        <page name='15 - Concise syntax for sorting using a KeyPath'/>
+        <page name='16 - Easier String slicing using ranges'/>
+        <page name='17 - Safely subscripting a Collection'/>
+    </pages>
+</playground>
