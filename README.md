@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [Safely subscripting a Collection](#safely-subscripting-a-collection)
 * [Easier String slicing using ranges](#easier-string-slicing-using-ranges)
 * [Concise syntax for sorting using a KeyPath](#concise-syntax-for-sorting-using-a-keypath)
 * [Manufacturing cache-efficient versions of pure functions](#manufacturing-cache-efficient-versions-of-pure-functions)
@@ -22,6 +23,25 @@ The following is a collection of tips I find to be useful when working with the 
 * [Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Safely subscripting a Collection
+
+Any attempt to access an `Array` beyond its bounds will result in a crash. While it's possible to write conditions such as `if index < array.count { array[index] }` in order to prevent such crashes, this approach will rapidly become cumbersome.
+
+A great thing is that this condition can be encapsulated in a custom `subscript` that will work on any `Collection`:
+
+```swift
+extension Collection {
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+let data = [1, 3, 4]
+
+data[safe: 1] // Optional(3)
+data[safe: 10] // nil
+```
 
 ## Easier String slicing using ranges
 
