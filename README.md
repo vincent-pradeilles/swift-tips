@@ -27,7 +27,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 Subscripting a string with a range can be very cumbersome in Swift 4. Let's face it, no one wants to write lines like `someString[index(startIndex, offsetBy: 0)..<index(startIndex, offsetBy: 10)]` on a regular basis. 
 
-Luckily, with the addition of one clever extension, strings can be sliced as easily as an array 🎉
+Luckily, with the addition of one clever extension, strings can be sliced as easily as arrays 🎉
 
 ```swift
 extension String {
