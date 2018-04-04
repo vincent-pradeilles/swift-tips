@@ -280,14 +280,19 @@ With the addition of keypaths in Swift 4, it is now possible to easily implement
 ```swift
 import UIKit
 
-let view = UIView()
+protocol With {}
 
-extension UILabel {
-    func with<T>(_ property: ReferenceWritableKeyPath<UILabel, T>, setTo value: T) -> UILabel {
+extension With where Self: AnyObject {
+    @discardableResult
+    func with<T>(_ property: ReferenceWritableKeyPath<Self, T>, setTo value: T) -> Self {
         self[keyPath: property] = value
         return self
     }
 }
+
+extension UIView: With {}
+
+let view = UIView()
 
 let label = UILabel()
     .with(\.textColor, setTo: .red)
