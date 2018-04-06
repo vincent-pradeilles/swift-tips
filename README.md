@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [Comparing Optionals through Conditional Conformance](#comparing-optionals-through-conditional-conformance)
 * [Safely subscripting a Collection](#safely-subscripting-a-collection)
 * [Easier String slicing using ranges](#easier-string-slicing-using-ranges)
 * [Concise syntax for sorting using a KeyPath](#concise-syntax-for-sorting-using-a-keypath)
@@ -23,6 +24,35 @@ The following is a collection of tips I find to be useful when working with the 
 * [Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Comparing Optionals through Conditional Conformance
+
+
+Swift 4.1 has introduced a new feature called [Conditional Conformance](https://swift.org/blog/conditional-conformance/), which allows a type to implement a protocol only when its generic type also does. 
+
+With this addition it becomes easy to let `Optional` implement `Comparable` only when `Wrapped` also implements `Comparable`:
+
+```swift
+import Foundation
+
+extension Optional: Comparable where Wrapped: Comparable {
+    public static func < (lhs: Optional, rhs: Optional) -> Bool {
+        switch (lhs, rhs) {
+        case let (lhs?, rhs?):
+            return lhs < rhs
+        case (nil, _?):
+            return true // anything is greater than nil
+        case (_?, nil):
+            return false // nil in smaller than anything
+        case (nil, nil):
+            return true // nil is not smaller than itself
+        }
+    }
+}
+
+let data: [Int?] = [8, 4, 3, nil, 12, 4, 2, nil, -5]
+data.sorted() // [nil, nil, Optional(-5), Optional(2), Optional(3), Optional(4), Optional(4), Optional(8), Optional(12)]
+```
 
 ## Safely subscripting a Collection
 

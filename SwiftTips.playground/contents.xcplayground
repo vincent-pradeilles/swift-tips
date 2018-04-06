@@ -18,5 +18,6 @@
         <page name='15 - Concise syntax for sorting using a KeyPath'/>
         <page name='16 - Easier String slicing using ranges'/>
         <page name='17 - Safely subscripting a Collection'/>
+        <page name='18 - Comparing Optionals through Conditional Conformance'/>
     </pages>
 </playground>
