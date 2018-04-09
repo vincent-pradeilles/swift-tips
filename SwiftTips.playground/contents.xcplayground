@@ -19,5 +19,6 @@
         <page name='16 - Easier String slicing using ranges'/>
         <page name='17 - Safely subscripting a Collection'/>
         <page name='18 - Comparing Optionals through Conditional Conformance'/>
+        <page name='19 - Making good use of #file, #line and #function'/>
     </pages>
 </playground>

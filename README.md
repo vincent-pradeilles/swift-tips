@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#19 Making good use of #file, #line and #function](#making-good-use-of-file-line-and-function)
 * [#18 Comparing Optionals through Conditional Conformance](#comparing-optionals-through-conditional-conformance)
 * [#17 Safely subscripting a Collection](#safely-subscripting-a-collection)
 * [#16 Easier String slicing using ranges](#easier-string-slicing-using-ranges)
@@ -24,6 +25,24 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+# Making good use of \#file, \#line and \#function
+
+Swift exposes three special variables `#file`, `#line` and `#function`, that are respectively set to the name of the current file, line and function. Those variables become very useful when writing custom logging functions or test predicates.
+
+```swift
+import Foundation
+
+func log(_ message: String, _ file: String = #file, _ line: Int = #line, _ function: String = #function) {
+    print("[\(file):\(line)] \(function) - \(message)")
+}
+
+func foo() {
+    log("Hello world!")
+}
+
+foo() // [MyPlayground.playground:8] foo() - Hello world!
+```
 
 ## Comparing Optionals through Conditional Conformance
 
