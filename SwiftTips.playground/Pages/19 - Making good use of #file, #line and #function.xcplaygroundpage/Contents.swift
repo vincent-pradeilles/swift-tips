@@ -17,6 +17,6 @@ func foo() {
     log("Hello world!")
 }
 
-foo() // [MyPlayground.playground:17] foo() - Hello world!
+foo() // [SwiftTips.playground:17] foo() - Hello world!
 
 //: [Next](@next)
