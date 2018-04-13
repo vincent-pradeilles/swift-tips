@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#22 Using parallelism to speed-up `map()`](#using-parallelism-to-speed-up-map)
 * [#21 Measuring execution time with minimum boilerplate](#measuring-execution-time-with-minimum-boilerplate)
 * [#20 Running two pieces of code in parallel](#running-two-pieces-of-code-in-parallel)
 * [#19 Making good use of #file, #line and #function](#making-good-use-of-file-line-and-function)
@@ -27,6 +28,40 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Using parallelism to speed-up `map()`
+
+Almost all Apple devices able to run Swift code are powered by a multi-core CPU, consequently making a good use of parallelism is a great way to improve code performance. `map()` is a perfect candidate for such an optimization, because it is almost trivial to implement a parallel version.
+
+
+```swift
+import Foundation
+
+extension Array {
+    func parallelMap<T>(_ transform: (Element) -> T) -> [T] {
+        let res = UnsafeMutablePointer<T>.allocate(capacity: count)
+        
+        DispatchQueue.concurrentPerform(iterations: count) { i in
+            res[i] = transform(self[i])
+        }
+        
+        let finalResult = Array<T>(UnsafeBufferPointer(start: res, count: count))
+        res.deallocate(capacity: count)
+        
+        return finalResult
+    }
+}
+
+let array = (0..<1_000).map { $0 }
+
+func work(_ n: Int) -> Int {
+    return (0..<n).reduce(0, +)
+}
+
+array.parallelMap { work($0) }
+```
+
+🚨 Make sure to only use `parallelMap()` when the `transform` function actually performs some costly computations. Otherwise performances will be systematically slower than using `map()` because of the multithreading overhead.
 
 ## Measuring execution time with minimum boilerplate
 

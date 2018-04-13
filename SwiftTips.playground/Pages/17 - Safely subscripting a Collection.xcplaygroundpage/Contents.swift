@@ -10,6 +10,7 @@
  A great thing is that this condition can be encapsulated in
  a custom `subscript` that will work on any `Collection`:
  */
+
 import Foundation
 
 extension Collection {
