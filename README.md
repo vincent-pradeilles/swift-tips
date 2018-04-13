@@ -72,7 +72,7 @@ expirable.value // nil
 
 ## Using parallelism to speed-up `map()`
 
-Almost all Apple devices able to run Swift code are powered by a multi-core CPU, consequently making a good use of parallelism is a great way to improve code performance. `map()` is a perfect candidate for such an optimization, because it is almost trivial to implement a parallel version.
+Almost all Apple devices able to run Swift code are powered by a multi-core CPU, consequently making a good use of parallelism is a great way to improve code performance. `map()` is a perfect candidate for such an optimization, because it is almost trivial to define a parallel implementation.
 
 
 ```swift
@@ -102,7 +102,7 @@ func work(_ n: Int) -> Int {
 array.parallelMap { work($0) }
 ```
 
-🚨 Make sure to only use `parallelMap()` when the `transform` function actually performs some costly computations. Otherwise performances will be systematically slower than using `map()` because of the multithreading overhead.
+🚨 Make sure to only use `parallelMap()` when the `transform` function actually performs some costly computations. Otherwise performances will be systematically slower than using `map()`, because of the multithreading overhead.
 
 ## Measuring execution time with minimum boilerplate
 

@@ -5,11 +5,11 @@
  by a multi-core CPU, consequently making a good use of
  parallelism is a great way to improve code performance.
  `map()` is a perfect candidate for such an optimization,
- because it is almost trivial to implement a parallel version.
+ because it is almost trivial to define a parallel implementation.
  
  🚨 Make sure to only use `parallelMap()` when the `transform`
  function actually performs some costly computations. Otherwise
- performances will be systematically slower than using `map()`
+ performances will be systematically slower than using `map()`,
  because of the multithreading overhead.
  */
 
