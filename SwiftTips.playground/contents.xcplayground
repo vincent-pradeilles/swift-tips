@@ -21,5 +21,6 @@
         <page name='18 - Comparing Optionals through Conditional Conformance'/>
         <page name='19 - Making good use of #file, #line and #function'/>
         <page name='20 - Running two pieces of code in parallel'/>
+        <page name='21 - Measuring execution time with minimum boilerplate'/>
     </pages>
 </playground>

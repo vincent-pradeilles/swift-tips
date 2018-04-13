@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#21 Measuring execution time with minimum boilerplate](#measuring-execution-time-with-minimum-boilerplate)
 * [#20 Running two pieces of code in parallel](#running-two-pieces-of-code-in-parallel)
 * [#19 Making good use of #file, #line and #function](#making-good-use-of-file-line-and-function)
 * [#18 Comparing Optionals through Conditional Conformance](#comparing-optionals-through-conditional-conformance)
@@ -26,6 +27,29 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Measuring execution time with minimum boilerplate
+
+During development of a feature that performs some heavy computations, it can be helpful to measure just how much time a chunk of code takes to run. The `time()` function is a nice tool for this purpose, because of how simple it is to add and then to remove when it is no longer needed.
+
+```swift
+import Foundation
+
+func time(averagedExecutions: Int = 1, _ code: () -> Void) {
+    let start = Date()
+    for _ in 0..<averagedExecutions { code() }
+    let end = Date()
+    
+    let duration = end.timeIntervalSince(start) / Double(averagedExecutions)
+    
+    print("time: \(duration)")
+}
+
+time {
+    (0...10_000).map { $0 * $0 }
+}
+// time: 0.183973908424377
+```
 
 ## Running two pieces of code in parallel
 
