@@ -6,6 +6,11 @@
  parallelism is a great way to improve code performance.
  `map()` is a perfect candidate for such an optimization,
  because it is almost trivial to implement a parallel version.
+ 
+ 🚨 Make sure to only use `parallelMap()` when the `transform`
+ function actually performs some costly computations. Otherwise
+ performances will be systematically slower than using `map()`
+ because of the multithreading overhead.
  */
 
 import Foundation
