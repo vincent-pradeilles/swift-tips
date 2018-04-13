@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#23 Dealing with expirable values](#dealing-with-expirable-values)
 * [#22 Using parallelism to speed-up `map()`](#using-parallelism-to-speed-up-map)
 * [#21 Measuring execution time with minimum boilerplate](#measuring-execution-time-with-minimum-boilerplate)
 * [#20 Running two pieces of code in parallel](#running-two-pieces-of-code-in-parallel)
@@ -28,6 +29,46 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Dealing with expirable values
+
+It might happen that your code has to deal with values that come with an expiration data. In a game, it could be a score multiplier that will only last for 30 seconds. Or it could be an authentication token for an API with a 15 minutes lifespan. In both instances you can rely on the type `Expirable` to encapsulate the expiration logic.
+
+```swift
+import Foundation
+
+struct Expirable<T> {
+    var expirationDate: Date
+    private var innerValue: T
+    
+    var value: T? {
+        return expired() ? innerValue : nil
+    }
+    
+    init(value: T, expirationDate: Date) {
+        self.innerValue = value
+        self.expirationDate = expirationDate
+    }
+    
+    init(value: T, duration: Double) {
+        self.innerValue = value
+        self.expirationDate = Date().addingTimeInterval(duration)
+    }
+    
+    func expired() -> Bool {
+        return expirationDate.timeIntervalSince(Date()) > 0
+    }
+}
+
+let expirable = Expirable(value: 42, duration: 3)
+
+sleep(2)
+expirable.value // 42
+sleep(2)
+expirable.value // nil
+```
+
+> I share the credit for this tip with [Benoît Caron](https://www.linkedin.com/in/benoît-caron-57530634/).
 
 ## Using parallelism to speed-up `map()`
 
