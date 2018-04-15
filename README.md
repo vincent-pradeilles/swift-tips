@@ -486,6 +486,10 @@ let label = UILabel()
 view.addSubview(label)
 ```
 
+🚨 The Swift compiler **does not** perform OS availability checks on properties referenced by keypaths. Any attempt to use a `KeyPath` for an unavailable property will result in a runtime crash.
+
+> I share the credit for this tip with [Marion Curtil](https://www.linkedin.com/in/marion-curtil-1a478970/).
+
 ## Storing functions rather than values
 
 When a type stores values for the sole purpose of parametrizing its functions, it’s then possible to not store the values but directly the function, with no discernable difference at the call site.

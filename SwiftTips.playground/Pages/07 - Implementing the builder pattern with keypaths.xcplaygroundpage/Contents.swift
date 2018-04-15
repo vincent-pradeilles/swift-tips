@@ -6,6 +6,10 @@
  developer to clearly separate the code that initializes a value
  from the code that uses it, without the burden of defining a
  factory method.
+ 
+ 🚨 The Swift compiler **does not** perform OS availability checks
+ on properties referenced by keypaths. Any attempt to use a `KeyPath`
+ for an unavailable property will result in a runtime crash.
  */
 
 import UIKit
