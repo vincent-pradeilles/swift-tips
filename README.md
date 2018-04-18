@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#25 Defining a function to map over dictionaries](#defining-a-function-to-map-over-dictionaries)
 * [#24 A shorter syntax to remove `nil` values](#a-shorter-syntax-to-remove-nil-values)
 * [#23 Dealing with expirable values](#dealing-with-expirable-values)
 * [#22 Using parallelism to speed-up `map()`](#using-parallelism-to-speed-up-map)
@@ -30,6 +31,30 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Defining a function to map over dictionaries
+
+Surprisingly enough, the standard library doesn't define a `map()` function for dictionaries that allows to map both `keys` and `values` into a new `Dictionary`. Nevertheless, such a function can be helpful, for instance when converting data across different frameworks.
+
+```swift
+import Foundation
+
+extension Dictionary {
+    func map<T: Hashable, U>(_ transform: (Key, Value) throws -> (T, U)) rethrows -> [T: U] {
+        var result: [T: U] = [:]
+        
+        for (key, value) in self {
+            let (transformedKey, transformedValue) = try transform(key, value)
+            result[transformedKey] = transformedValue
+        }
+        
+        return result
+    }
+}
+
+let data = [0: 5, 1: 6, 2: 7]
+data.map { ("\($0)", $1 * $1) } // ["2": 49, "0": 25, "1": 36]
+```
 
 ## A shorter syntax to remove `nil` values
 

@@ -25,5 +25,6 @@
         <page name='22 - Using parallelism to speed-up map()'/>
         <page name='23 - Dealing with expirable values'/>
         <page name='24 - A shorter syntax to remove nil values'/>
+        <page name='25 - Defining a function to map over dictionaries'/>
     </pages>
 </playground>
