@@ -24,5 +24,6 @@
         <page name='21 - Measuring execution time with minimum boilerplate'/>
         <page name='22 - Using parallelism to speed-up map()'/>
         <page name='23 - Dealing with expirable values'/>
+        <page name='24 - A shorter syntax to remove nil values'/>
     </pages>
 </playground>
