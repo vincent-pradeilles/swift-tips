@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#26 Retrieving all the necessary data to build a debug view](#retrieving-all-the-necessary-data-to-build-a-debug-view)
 * [#25 Defining a function to map over dictionaries](#defining-a-function-to-map-over-dictionaries)
 * [#24 A shorter syntax to remove `nil` values](#a-shorter-syntax-to-remove-nil-values)
 * [#23 Dealing with expirable values](#dealing-with-expirable-values)
@@ -31,6 +32,46 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Retrieving all the necessary data to build a debug view
+
+A debug view, from which any controller of an app can be instantiated and pushed on the navigation stack, has the potential to bring some real value to a development process. A requirement to build such a view is to have a list of all the classes from a given `Bundle` that inherit from `UIViewController`. With the following `extension`, retrieving this list becomes a piece of cake 🍰
+
+```swift
+import Foundation
+import UIKit
+import ObjectiveC
+
+extension Bundle {
+    func viewControllerTypes() -> [UIViewController.Type] {
+        guard let bundlePath = self.executablePath else { return [] }
+        
+        var size: UInt32 = 0
+        var rawClassNames: UnsafeMutablePointer<UnsafePointer<Int8>>!
+        var parsedClassNames = [String]()
+        
+        rawClassNames = objc_copyClassNamesForImage(bundlePath, &size)
+        
+        for index in 0..<size {
+            let className = rawClassNames[Int(index)]
+            
+            if let name = NSString.init(utf8String:className) as String?,
+                NSClassFromString(name) is UIViewController.Type {
+                parsedClassNames.append(name)
+            }
+        }
+        
+        return parsedClassNames
+            .sorted()
+            .compactMap { NSClassFromString($0) as? UIViewController.Type }
+    }
+}
+
+// Fetch all view controller types in UIKit
+Bundle(for: UIViewController.self).viewControllerTypes()
+```
+
+> I share the credit for this tip with [Benoît Caron](https://www.linkedin.com/in/benoît-caron-57530634/).
 
 ## Defining a function to map over dictionaries
 

@@ -26,5 +26,6 @@
         <page name='23 - Dealing with expirable values'/>
         <page name='24 - A shorter syntax to remove nil values'/>
         <page name='25 - Defining a function to map over dictionaries'/>
+        <page name='26 - Retrieving all the necessary data for a debug view'/>
     </pages>
 </playground>
