@@ -139,7 +139,7 @@ struct Expirable<T> {
     private(set) var expirationDate: Date
     
     var value: T? {
-        return hasExpired() ? innerValue : nil
+        return hasExpired() ? nil : innerValue
     }
     
     init(value: T, expirationDate: Date) {
@@ -153,7 +153,7 @@ struct Expirable<T> {
     }
     
     func hasExpired() -> Bool {
-        return expirationDate.timeIntervalSince(Date()) > 0
+        return expirationDate < Date()
     }
 }
 
