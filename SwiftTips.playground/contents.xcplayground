@@ -28,5 +28,6 @@
         <page name='25 - Defining a function to map over dictionaries'/>
         <page name='26 - Retrieving all the necessary data to build a debug view'/>
         <page name='27 - Encapsulating background computation and UI update'/>
+        <page name='28 - Shorter syntax to deal with optional strings'/>
     </pages>
 </playground>

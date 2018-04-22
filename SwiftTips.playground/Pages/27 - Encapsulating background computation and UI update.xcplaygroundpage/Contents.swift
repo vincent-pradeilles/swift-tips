@@ -1,7 +1,7 @@
 //: [Previous](@previous)
 
 /*
- Every seasoned iOS developers knows it: objects from UIKit
+ Every seasoned iOS developers knows it: objects from `UIKit`
  can only be accessed from the main thread. Any attempt to
  access them from a background thread is a guaranteed crash.
  

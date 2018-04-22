@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#28 Shorter syntax to deal with optional strings](#shorter-syntax-to-deal-with-optional-strings)
 * [#27 Encapsulating background computation and UI update](#encapsulating-background-computation-and-ui-update)
 * [#26 Retrieving all the necessary data to build a debug view](#retrieving-all-the-necessary-data-to-build-a-debug-view)
 * [#25 Defining a function to map over dictionaries](#defining-a-function-to-map-over-dictionaries)
@@ -34,9 +35,44 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Tips
 
+## Shorter syntax to deal with optional strings
+
+Optional strings are very common in Swift code, for instance many objects from `UIKit` expose the text they display as a `String?`. Many times you will need to manipulate this data as an unwrapped `String`, with a default value set to the empty string for `nil` cases. 
+
+While the nil-coalescing operator (e.g. `??`) is a perfectly fine way to a achieve this goal, defining a computed variable like `orEmpty` can help a lot in cleaning the syntax.
+
+```swift
+import Foundation
+import UIKit
+
+extension Optional where Wrapped == String {
+    var orEmpty: String {
+        switch self {
+        case .some(let value):
+            return value
+        case .none:
+            return ""
+        }
+    }
+}
+
+func doesNotWorkWithOptionalString(_ param: String) {
+    // do something with `param`
+}
+
+let label = UILabel()
+label.text = "This is some text."
+
+doesNotWorkWithOptionalString(label.text.orEmpty)
+```
+
 ## Encapsulating background computation and UI update
 
-Every seasoned iOS developers knows it: objects from UIKit can only be accessed from the main thread. Any attempt to access them from a background thread is a guaranteed crash. Still, running a costly computation on the background, and then using it to update the UI can be a common pattern. In such cases you can rely on `asyncUI` to encapsulate all the boilerplate code.
+Every seasoned iOS developers knows it: objects from `UIKit` can only be accessed from the main thread. Any attempt to access them from a background thread is a guaranteed crash. 
+
+Still, running a costly computation on the background, and then using it to update the UI can be a common pattern. 
+
+In such cases you can rely on `asyncUI` to encapsulate all the boilerplate code.
 
 ```swift
 import Foundation
