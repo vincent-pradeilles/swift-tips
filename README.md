@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#27 Encapsulating background computation and UI update](#encapsulating-background-computation-and-ui-update)
 * [#26 Retrieving all the necessary data to build a debug view](#retrieving-all-the-necessary-data-to-build-a-debug-view)
 * [#25 Defining a function to map over dictionaries](#defining-a-function-to-map-over-dictionaries)
 * [#24 A shorter syntax to remove `nil` values](#a-shorter-syntax-to-remove-nil-values)
@@ -32,6 +33,32 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Encapsulating background computation and UI update
+
+Every seasoned iOS developers knows it: objects from UIKit can only be accessed from the main thread. Any attempt to access them from a background thread is a guaranteed crash. Still, running a costly computation on the background, and then using it to update the UI can be a common pattern. In such cases you can rely on `asyncUI` to encapsulate all the boilerplate code.
+
+```swift
+import Foundation
+import UIKit
+
+func asyncUI<T>(_ computation: @autoclosure @escaping () -> T, qos: DispatchQoS.QoSClass = .userInitiated, _ completion: @escaping (T) -> Void) {
+    DispatchQueue.global(qos: qos).async {
+        let value = computation()
+        DispatchQueue.main.async {
+            completion(value)
+        }
+    }
+}
+
+let label = UILabel()
+
+func costlyComputation() -> Int { return (0..<10_000).reduce(0, +) }
+
+asyncUI(costlyComputation()) { value in
+    label.text = "\(value)"
+}
+```
 
 ## Retrieving all the necessary data to build a debug view
 
