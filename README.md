@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#29 Removing duplicate values from a `Sequence`](#removing-duplicate-values-from-a-sequence)
 * [#28 Shorter syntax to deal with optional strings](#shorter-syntax-to-deal-with-optional-strings)
 * [#27 Encapsulating background computation and UI update](#encapsulating-background-computation-and-ui-update)
 * [#26 Retrieving all the necessary data to build a debug view](#retrieving-all-the-necessary-data-to-build-a-debug-view)
@@ -34,6 +35,24 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Removing duplicate values from a `Sequence`
+
+Transforming a `Sequence` in order to remove all the duplicate values it contains is a classic use case. To implement it, one could be tempted to transform the `Sequence` into a `Set`, then back to an `Array`. The downside with this approach is that it will not preserve the order of the sequence, which can definitely be a dealbreaker. Using `reduce()` it is possible to provide a concise implementation that preserves ordering:
+
+```swift
+import Foundation
+
+extension Sequence where Element: Equatable {
+    func duplicatesRemoved() -> [Element] {
+        return reduce([], { $0.contains($1) ? $0 : $0 + [$1] })
+    }
+}
+
+let data = [2, 5, 2, 3, 6, 5, 2]
+
+data.duplicatesRemoved() // [2, 5, 3, 6]
+```
 
 ## Shorter syntax to deal with optional strings
 
