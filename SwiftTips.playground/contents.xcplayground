@@ -30,5 +30,6 @@
         <page name='27 - Encapsulating background computation and UI update'/>
         <page name='28 - Shorter syntax to deal with optional strings'/>
         <page name='29 - Removing duplicate values from a Sequence'/>
+        <page name='30 - Providing useful operators for Optional booleans'/>
     </pages>
 </playground>

@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#30 Providing useful operators for `Optional` booleans](#providing-useful-operators-for-optional-booleans)
 * [#29 Removing duplicate values from a `Sequence`](#removing-duplicate-values-from-a-sequence)
 * [#28 Shorter syntax to deal with optional strings](#shorter-syntax-to-deal-with-optional-strings)
 * [#27 Encapsulating background computation and UI update](#encapsulating-background-computation-and-ui-update)
@@ -35,6 +36,44 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Providing useful operators for `Optional` booleans
+
+When we need to apply the standard boolean operators to `Optional` booleans, we often end up with a syntax unnecessarily crowded with unwrapping operations. By taking a cue from the world of [three-valued logics](https://en.wikipedia.org/wiki/Three-valued_logic), we can define a couple operators that make working with `Bool?` values much nicer. 
+
+```swift
+import Foundation
+
+func && (lhs: Bool?, rhs: Bool?) -> Bool? {
+    switch (lhs, rhs) {
+    case (false, _), (_, false):
+        return false
+    case let (unwrapLhs?, unwrapRhs?):
+        return unwrapLhs && unwrapRhs
+    default:
+        return nil
+    }
+}
+
+func || (lhs: Bool?, rhs: Bool?) -> Bool? {
+    switch (lhs, rhs) {
+    case (true, _), (_, true):
+        return true
+    case let (unwrapLhs?, unwrapRhs?):
+        return unwrapLhs || unwrapRhs
+    default:
+        return nil
+    }
+}
+
+false && nil // false
+true && nil // nil
+[true, nil, false].reduce(true, &&) // false
+
+nil || true // true
+nil || false // nil
+[true, nil, false].reduce(false, ||) // true
+```
 
 ## Removing duplicate values from a `Sequence`
 
