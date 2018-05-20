@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#35 Defining an union type](#defining-an-union-type)
 * [#34 Asserting that classes have associated NIBs and vice-versa](#asserting-that-classes-have-associated-nibs-and-vice-versa)
 * [#33 Small footprint type-erasing with functions](#small-footprint-type-erasing-with-functions)
 * [#32 Performing animations sequentially](#performing-animations-sequentially)
@@ -40,6 +41,36 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Defining an union type
+
+The C language has a construct called `union`, that allows a single variable to hold values from different types. While Swift does not provide such a construct, it provides enums with associated values, which allows us to define a type called `Either` that implements an `union` of two types.
+
+```swift
+import Foundation
+
+enum Either<A, B> {
+    case left(A)
+    case right(B)
+    
+    func either(ifLeft: ((A) -> Void)? = nil, ifRight: ((B) -> Void)? = nil) {
+        switch self {
+        case let .left(a):
+            ifLeft?(a)
+        case let .right(b):
+            ifRight?(b)
+        }
+    }
+}
+
+extension Bool { static func random() -> Bool { return arc4random_uniform(2) == 0 } }
+
+var intOrString: Either<Int, String> = Bool.random() ? .left(2) : .right("Foo")
+
+intOrString.either(ifLeft: { print($0 + 1) }, ifRight: { print($0 + "Bar") })
+```
+
+If you're interested by this kind of data structure, I strongly recommend that you learn more about [Algebraic Data Types](https://en.wikipedia.org/wiki/Algebraic_data_type).
 
 ## Asserting that classes have associated NIBs and vice-versa
 
