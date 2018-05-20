@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#36 Avoiding hardcoded reuse identifiers](#avoiding-hardcoded-reuse-identifiers)
 * [#35 Defining an union type](#defining-an-union-type)
 * [#34 Asserting that classes have associated NIBs and vice-versa](#asserting-that-classes-have-associated-nibs-and-vice-versa)
 * [#33 Small footprint type-erasing with functions](#small-footprint-type-erasing-with-functions)
@@ -41,6 +42,45 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Avoiding hardcoded reuse identifiers
+
+UI components such as `UITableView` and `UICollectionView` rely on reuse identifiers in order to efficiently recycle the views they display. Often, those reuse identifiers take the form of a static hardcoded `String`, that will be used for every instance of their class.
+
+Through protocol-oriented programing, it's possible to avoid those hardcoded values, and instead use the name of the type as a reuse identifier.
+
+```swift
+import Foundation
+import UIKit
+
+protocol Reusable {
+    static var reuseIdentifier: String { get }
+}
+
+extension Reusable {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UITableViewCell: Reusable { }
+
+extension UITableView {
+    func register<T: UITableViewCell>(_ class: T.Type) {
+        register(`class`, forCellReuseIdentifier: T.reuseIdentifier)
+    }
+    func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as! T
+    }
+}
+
+class MyCell: UITableViewCell { }
+
+let tableView = UITableView()
+
+tableView.register(MyCell.self)
+let myCell: MyCell = tableView.dequeueReusableCell(for: [0, 0])
+```
 
 ## Defining an union type
 
