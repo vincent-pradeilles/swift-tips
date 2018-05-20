@@ -34,5 +34,6 @@
         <page name='31 - Debouncing a function call'/>
         <page name='32 - Performing animations sequentially'/>
         <page name='33 - Small footprint type-erasing with functions'/>
+        <page name='34 - Asserting that classes have associated NIBs and vice-versa'/>
     </pages>
 </playground>
