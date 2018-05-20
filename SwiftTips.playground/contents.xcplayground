@@ -32,5 +32,6 @@
         <page name='29 - Removing duplicate values from a Sequence'/>
         <page name='30 - Providing useful operators for Optional booleans'/>
         <page name='31 - Debouncing a function call'/>
+        <page name='32 - Performing animations sequentially'/>
     </pages>
 </playground>
