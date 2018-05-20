@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#33 Small footprint type-erasing with functions](#small-footprint-type-erasing-with-functions)
 * [#32 Performing animations sequentially](#performing-animations-sequentially)
 * [#31 Debouncing a function call](#debouncing-a-function-call)
 * [#30 Providing useful operators for `Optional` booleans](#providing-useful-operators-for-optional-booleans)
@@ -38,6 +39,38 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Small footprint type-erasing with functions
+
+Seasoned Swift developers know it: a protocol with associated type (PAT) "can only be used as a generic constraint because it has Self or associated type requirements". When we really need to use a PAT to type a variable, the goto workaround is to use a [type-erased wrapper](https://academy.realm.io/posts/type-erased-wrappers-in-swift/).
+
+While this solution works perfectly, it requires a fair amount of boilerplate code. In instances where we are only interested in exposing one particular function of the PAT, a shorter approach using function types is possible.
+
+```swift
+import Foundation
+import UIKit
+
+protocol Configurable {
+    associatedtype Model
+    
+    func configure(with model: Model)
+}
+
+typealias Configurator<Model> = (Model) -> ()
+
+extension UILabel: Configurable {
+    func configure(with model: String) {
+        self.text = model
+    }
+}
+
+let label = UILabel()
+let configurator: Configurator<String> = label.configure
+
+configurator("Foo")
+
+label.text // "Foo"
+```
 
 ## Performing animations sequentially
 
