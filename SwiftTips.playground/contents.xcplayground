@@ -37,5 +37,6 @@
         <page name='34 - Asserting that classes have associated NIBs and vice-versa'/>
         <page name='35 - Defining an union type'/>
         <page name='36 - Avoiding hardcoded reuse identifiers'/>
+        <page name='37 - Optimizing the use of `reduce()`'/>
     </pages>
 </playground>
