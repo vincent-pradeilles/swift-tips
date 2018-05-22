@@ -194,6 +194,8 @@ XCTAssertClassHasNib(MySecondTableViewCell.self, bundle: Bundle(for: AppDelegate
 XCTAssertNibHaveClasses(Bundle(for: AppDelegate.self))
 ```
 
+Many thanks [Benjamin Lavialle](https://www.linkedin.com/in/benjamin-lavialle-0a184140/) for coming up with the idea behind the second test predicate.
+
 ## Small footprint type-erasing with functions
 
 Seasoned Swift developers know it: a protocol with associated type (PAT) "can only be used as a generic constraint because it has Self or associated type requirements". When we really need to use a PAT to type a variable, the goto workaround is to use a [type-erased wrapper](https://academy.realm.io/posts/type-erased-wrappers-in-swift/).
