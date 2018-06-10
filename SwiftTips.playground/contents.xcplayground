@@ -38,5 +38,6 @@
         <page name='35 - Defining an union type'/>
         <page name='36 - Avoiding hardcoded reuse identifiers'/>
         <page name='37 - Optimizing the use of `reduce()`'/>
+        <page name='38 - Writing an interruptible overload of `forEach`'/>
     </pages>
 </playground>

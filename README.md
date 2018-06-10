@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#38 Writing an interruptible overload of `forEach`](#writing-an-interruptible-overload-of-foreach)
 * [#37 Optimizing the use of `reduce()`](#optimizing-the-use-of-reduce)
 * [#36 Avoiding hardcoded reuse identifiers](#avoiding-hardcoded-reuse-identifiers)
 * [#35 Defining an union type](#defining-an-union-type)
@@ -43,6 +44,38 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Writing an interruptible overload of `forEach`
+
+Iterating through objects via the `forEach(_:)` method is a great alternative to the classic `for` loop, as it allows our code to be completely oblivious of the iteration logic. One limitation, however, is that `forEach(_:)` does not allow to stop the iteration midway.
+
+Taking inspiration from the [Objective-C implementation](https://developer.apple.com/documentation/foundation/nsarray/1415846-enumerateobjectsusingblock), we can write an overload that will allow the developer to stop the iteration, if needed.
+
+```swift
+import Foundation
+
+extension Sequence {
+    func forEach(_ body: (Element, _ stop: inout Bool) throws -> Void) rethrows {
+        var stop = false
+        for element in self {
+            try body(element, &stop)
+            
+            if stop {
+                return
+            }
+        }
+    }
+}
+
+["Foo", "Bar", "FooBar"].forEach { element, stop in
+    print(element)
+    stop = (element == "Bar")
+}
+
+// Prints:
+// Foo
+// Bar
+```
 
 ## Optimizing the use of `reduce()`
 
