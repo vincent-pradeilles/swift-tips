@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#39 Using `typealias` to its fullest](#using-typealias-to-its-fullest)
 * [#38 Writing an interruptible overload of `forEach`](#writing-an-interruptible-overload-of-foreach)
 * [#37 Optimizing the use of `reduce()`](#optimizing-the-use-of-reduce)
 * [#36 Avoiding hardcoded reuse identifiers](#avoiding-hardcoded-reuse-identifiers)
@@ -44,6 +45,25 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Using `typealias` to its fullest
+
+The keyword `typealias` allows developers to give a new name to an already existing type. For instance, Swift defines `Void` as a `typealias` of `()`, the empty tuple. 
+
+But a less known feature of this mechanism is that it allows to assign concrete types for generic parameters, or to rename them. This can help make the semantics of generic types much clearer, when used in specific use cases.
+
+```swift
+import Foundation
+
+enum Either<Left, Right> {
+    case left(Left)
+    case right(Right)
+}
+
+typealias Result<Value> = Either<Value, Error>
+
+typealias IntOrString = Either<Int, String>
+```
 
 ## Writing an interruptible overload of `forEach`
 
