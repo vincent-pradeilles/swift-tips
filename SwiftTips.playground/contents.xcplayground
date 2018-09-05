@@ -41,5 +41,6 @@
         <page name='38 - Writing an interruptible overload of `forEach`'/>
         <page name='39 - Using `typealias` to its fullest'/>
         <page name='40 - Lightweight data-binding for an MVVM implementation'/>
+        <page name='41 - Bringing some type-safety to a userInfo Dictionary'/>
     </pages>
 </playground>
