@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#42 Using KeyPaths instead of closures](#using-keypaths-instead-of-closures)
 * [#41 Bringing some type-safety to a `userInfo` `Dictionary`](#bringing-some-type-safety-to-a-userinfo-dictionary)
 * [#40 Lightweight data-binding for an MVVM implementation](#lightweight-data-binding-for-an-mvvm-implementation)
 * [#39 Using `typealias` to its fullest](#using-typealias-to-its-fullest)
@@ -47,6 +48,34 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Using KeyPaths instead of closures
+
+Closures are a great way to interact with generic APIs, for instance APIs that allow to manipulate data structures through the use of generic functions, such as `filter()` or `sorted()`.
+
+The annoying part is that closures tend to clutter your code with many instances of `{`, `}` and `$0`, which can quickly undermine its readably.
+
+A nice alternative for a cleaner syntax is to use a `KeyPath` instead of a closure, along with an operator that will deal with transforming the provided `KeyPath` in a closure.
+
+```swift
+import Foundation
+
+prefix operator ^
+
+prefix func ^ <Element, Attribute>(_ keyPath: KeyPath<Element, Attribute>) -> (Element) -> Attribute {
+    return { element in element[keyPath: keyPath] }
+}
+
+struct MyData {
+    let int: Int
+    let string: String
+}
+
+let data = [MyData(int: 2, string: "Foo"), MyData(int: 4, string: "Bar")]
+
+data.map(^\.int) // [2, 4]
+data.map(^\.string) // ["Foo", "Bar"]
+```
 
 ## Bringing some type-safety to a `userInfo` `Dictionary`
 
