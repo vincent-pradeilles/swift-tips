@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#43 Transform an asynchronous function into a synchronous one](#transform-an-asynchronous-function-into-a-synchronous-one)
 * [#42 Using KeyPaths instead of closures](#using-keypaths-instead-of-closures)
 * [#41 Bringing some type-safety to a `userInfo` `Dictionary`](#bringing-some-type-safety-to-a-userinfo-dictionary)
 * [#40 Lightweight data-binding for an MVVM implementation](#lightweight-data-binding-for-an-mvvm-implementation)
@@ -48,6 +49,43 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Transform an asynchronous function into a synchronous one
+
+Asynchronous functions are a great way to deal with future events without blocking a thread. Yet, there are times where we would like them to behave in exactly such a blocking way.
+
+Think about writing unit tests and using mocked network calls. You will need to add complexity to your test in order to deal with asynchronous functions, whereas synchronous ones would be much easier to manage.
+
+Thanks to Swift proficiency in the functional paradigm, it is possible to write a function whose job is to take an asynchronous function and transform it into a synchronous one.
+
+```swift
+import Foundation
+
+func makeSynchrone<A, B>(_ asyncFunction: @escaping (A, (B) -> Void) -> Void) -> (A) -> B {
+    return { arg in
+        let lock = NSRecursiveLock()
+        
+        var result: B? = nil
+        
+        asyncFunction(arg) {
+            result = $0
+            lock.unlock()
+        }
+        
+        lock.lock()
+        
+        return result!
+    }
+}
+
+func myAsyncFunction(arg: Int, completionHandler: (String) -> Void) {
+    completionHandler("🎉 \(arg)")
+}
+
+let syncFunction = makeSynchrone(myAsyncFunction)
+
+print(syncFunction(42)) // prints 🎉 42
+```
 
 ## Using KeyPaths instead of closures
 

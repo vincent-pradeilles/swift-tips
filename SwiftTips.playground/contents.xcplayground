@@ -43,5 +43,6 @@
         <page name='40 - Lightweight data-binding for an MVVM implementation'/>
         <page name='41 - Bringing some type-safety to a userInfo Dictionary'/>
         <page name='42 - Using KeyPaths instead of closures'/>
+        <page name='43 - Transform an asynchronous function into a synchronous one'/>
     </pages>
 </playground>
