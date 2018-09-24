@@ -44,5 +44,6 @@
         <page name='41 - Bringing some type-safety to a userInfo Dictionary'/>
         <page name='42 - Using KeyPaths instead of closures'/>
         <page name='43 - Transform an asynchronous function into a synchronous one'/>
+        <page name='44 - Solving callback hell with function composition'/>
     </pages>
 </playground>
