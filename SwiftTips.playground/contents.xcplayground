@@ -46,5 +46,6 @@
         <page name='43 - Transform an asynchronous function into a synchronous one'/>
         <page name='44 - Solving callback hell with function composition'/>
         <page name='45 - Getting rid of overabundant `[weak self]` and `guard`'/>
+        <page name='46 - Lightweight dependency injection through protocol-oriented programming'/>
     </pages>
 </playground>
