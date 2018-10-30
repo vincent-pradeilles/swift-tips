@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#47 Another lightweight dependency injection through default values for function parameters](#another-lightweight-dependency-injection-through-default-values-for-function-parameters)
 * [#46 Lightweight dependency injection through protocol-oriented programming](#lightweight-dependency-injection-through-protocol-oriented-programming)
 * [#45 Getting rid of overabundant `[weak self]` and `guard`](#getting-rid-of-overabundant-weak-self-and-guard)
 * [#44 Solving callback hell with function composition](#solving-callback-hell-with-function-composition)
@@ -52,6 +53,55 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Another lightweight dependency injection through default values for function parameters
+
+Dependency injection boils down to a simple idea: when an object requires a dependency, it shouldn't create it by itself, but instead it should be given a function that does it for him.
+
+Now the great thing with Swift is that, not only can a function take another function as a parameter, but that parameter can also be given a default value.
+
+When you combine both those features, you can end up with a dependency injection pattern that is both lightweight on boilerplate, but also type safe.
+
+```swift
+import Foundation
+
+protocol Service {
+    func call() -> String
+}
+
+class ProductionService: Service {
+    func call() -> String {
+        return "This is the production"
+    }
+}
+
+class MockService: Service {
+    func call() -> String {
+        return "This is a mock"
+    }
+}
+
+typealias Provider<T> = () -> T
+
+class Controller {
+    
+    let service: Service
+    
+    init(serviceProvider: Provider<Service> = { return ProductionService() }) {
+        self.service = serviceProvider()
+    }
+    
+    func work() {
+        print(service.call())
+    }
+}
+
+let productionController = Controller()
+productionController.work() // prints "This is the production"
+
+let mockedController = Controller(serviceProvider: { return MockService() })
+mockedController.work() // prints "This is a mock"
+```
 
 ## Lightweight dependency injection through protocol-oriented programming
 

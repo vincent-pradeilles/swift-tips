@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios'>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='01 - Using map on optional values'/>
         <page name='02 - Generating all cases for an Enum'/>
@@ -47,5 +47,6 @@
         <page name='44 - Solving callback hell with function composition'/>
         <page name='45 - Getting rid of overabundant `[weak self]` and `guard`'/>
         <page name='46 - Lightweight dependency injection through protocol-oriented programming'/>
+        <page name='47 - Another lightweight dependency injection through default values for function parameters'/>
     </pages>
 </playground>
