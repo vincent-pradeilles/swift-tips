@@ -35,7 +35,7 @@
         <page name='32 - Performing animations sequentially'/>
         <page name='33 - Small footprint type-erasing with functions'/>
         <page name='34 - Asserting that classes have associated NIBs and vice-versa'/>
-        <page name='35 - Defining an union type'/>
+        <page name='35 - Defining a union type'/>
         <page name='36 - Avoiding hardcoded reuse identifiers'/>
         <page name='37 - Optimizing the use of `reduce()`'/>
         <page name='38 - Writing an interruptible overload of `forEach`'/>

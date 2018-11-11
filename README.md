@@ -16,7 +16,7 @@ The following is a collection of tips I find to be useful when working with the 
 * [#38 Writing an interruptible overload of `forEach`](#writing-an-interruptible-overload-of-foreach)
 * [#37 Optimizing the use of `reduce()`](#optimizing-the-use-of-reduce)
 * [#36 Avoiding hardcoded reuse identifiers](#avoiding-hardcoded-reuse-identifiers)
-* [#35 Defining an union type](#defining-an-union-type)
+* [#35 Defining a union type](#defining-a-union-type)
 * [#34 Asserting that classes have associated NIBs and vice-versa](#asserting-that-classes-have-associated-nibs-and-vice-versa)
 * [#33 Small footprint type-erasing with functions](#small-footprint-type-erasing-with-functions)
 * [#32 Performing animations sequentially](#performing-animations-sequentially)
@@ -547,9 +547,9 @@ tableView.register(MyCell.self)
 let myCell: MyCell = tableView.dequeueReusableCell(for: [0, 0])
 ```
 
-## Defining an union type
+## Defining a union type
 
-The C language has a construct called `union`, that allows a single variable to hold values from different types. While Swift does not provide such a construct, it provides enums with associated values, which allows us to define a type called `Either` that implements an `union` of two types.
+The C language has a construct called `union`, that allows a single variable to hold values from different types. While Swift does not provide such a construct, it provides enums with associated values, which allows us to define a type called `Either` that implements a `union` of two types.
 
 ```swift
 import Foundation

@@ -5,7 +5,7 @@
  a single variable to hold values from different types. While
  Swift does not provide such a construct, it provides enums
  with associated values, which allows us to define a type
- called `Either` that implements an `union` of two types.
+ called `Either` that implements a `union` of two types.
  */
 
 import Foundation
