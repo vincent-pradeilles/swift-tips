@@ -49,5 +49,6 @@
         <page name='46 - Lightweight dependency injection through protocol-oriented programming'/>
         <page name='47 - Another lightweight dependency injection through default values for function parameters'/>
         <page name='48 - Providing a default value to a `Decodable` `enum`'/>
+        <page name='49 - Using `Never` to represent impossible code paths'/>
     </pages>
 </playground>

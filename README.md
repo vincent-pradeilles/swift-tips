@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#49 Using `Never` to represent impossible code paths](#using-never-to-represent-impossible-code-paths)
 * [#48 Providing a default value to a `Decodable` `enum`](#providing-a-default-value-to-a-decodable-enum)
 * [#47 Another lightweight dependency injection through default values for function parameters](#another-lightweight-dependency-injection-through-default-values-for-function-parameters)
 * [#46 Lightweight dependency injection through protocol-oriented programming](#lightweight-dependency-injection-through-protocol-oriented-programming)
@@ -54,6 +55,36 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Using `Never` to represent impossible code paths
+
+`Never` is quite a peculiar type in the Swift Standard Library: it is defined as an empty enum `enum Never { }`.
+
+While this might seem odd at first glance, it actually yields a very interesting property: it makes it a type that cannot be constructed (i.e. it possesses no instances).
+
+This way, `Never` can be used as a generic parameter to let the compiler know that a particular feature will not be used.
+
+```swift
+import Foundation
+
+enum Result<Value, Error> {
+    case success(value: Value)
+    case failure(error: Error)
+}
+
+func willAlwaysSucceed(_ completion: @escaping ((Result<String, Never>) -> Void)) {
+    completion(.success(value: "Call was successful"))
+}
+
+willAlwaysSucceed( { result in
+    switch result {
+    case .success(let value):
+        print(value)
+    // the compilers knows that the `failure` case cannot happen
+    // so it doesn't require use to handle it.
+    }
+})
+```
 
 ## Providing a default value to a `Decodable` `enum`
 
