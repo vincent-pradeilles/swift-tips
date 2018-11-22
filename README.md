@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#50 Implementing a namespace through an empty `enum`](#implementing-a-namespace-through-an-empty-enum)
 * [#49 Using `Never` to represent impossible code paths](#using-never-to-represent-impossible-code-paths)
 * [#48 Providing a default value to a `Decodable` `enum`](#providing-a-default-value-to-a-decodable-enum)
 * [#47 Another lightweight dependency injection through default values for function parameters](#another-lightweight-dependency-injection-through-default-values-for-function-parameters)
@@ -55,6 +56,39 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Implementing a namespace through an empty `enum`
+
+Swift does not really have an out-of-the-box support of namespaces. One could argue that a Swift module can be seen as a namespace, but creating a dedicated Framework for this sole purpose can legitimately be regarded as overkill.
+
+Some developers have taken the habit to use a `struct` which only contains `static` fields to implement a namespace. While this does the job, it requires us to remember to implement an empty `private` `init()`, because it wouldn't make sense for such a `struct` to be instantiated.
+
+It's actually possible to take this approach one step further, by replacing the `struct` with an `enum`. While it might seem weird to have an `enum` with no `case`, it's actually a [very idiomatic way](https://github.com/apple/swift/blob/a4230ab2ad37e37edc9ed86cd1510b7c016a769d/stdlib/public/core/Unicode.swift#L918) to declare a type that cannot be instantiated.
+
+```swift
+import Foundation
+
+enum NumberFormatterProvider {
+    static var currencyFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.roundingIncrement = 0.01
+        return formatter
+    }
+    
+    static var decimalFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = ","
+        return formatter
+    }
+}
+
+NumberFormatterProvider() // ❌ impossible to instantiate by mistake
+
+NumberFormatterProvider.currencyFormatter.string(from: 2.456) // $2.46
+NumberFormatterProvider.decimalFormatter.string(from: 2.456) // 2,456
+```
 
 ## Using `Never` to represent impossible code paths
 
