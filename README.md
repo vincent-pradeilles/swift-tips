@@ -115,7 +115,7 @@ willAlwaysSucceed( { result in
     case .success(let value):
         print(value)
     // the compilers knows that the `failure` case cannot happen
-    // so it doesn't require use to handle it.
+    // so it doesn't require us to handle it.
     }
 })
 ```
