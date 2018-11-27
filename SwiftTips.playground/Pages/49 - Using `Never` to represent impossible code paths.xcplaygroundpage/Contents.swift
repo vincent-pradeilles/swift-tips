@@ -28,7 +28,7 @@ willAlwaysSucceed( { result in
     switch result {
     case .success(let value):
         print(value)
-        // the compilers knows that the `failure` case cannot happen
+        // the compiler knows that the `failure` case cannot happen
         // so it doesn't require us to handle it.
     }
 })
