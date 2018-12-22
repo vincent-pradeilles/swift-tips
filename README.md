@@ -998,6 +998,8 @@ Bundle(for: UIViewController.self).viewControllerTypes()
 
 ## Defining a function to map over dictionaries
 
+**Update** As it turns out, `map` is actually a really bad name for this function, because it does not preserve composition of transformations, a property that is required to fit the [definition](https://en.wikipedia.org/wiki/Functor) of a real `map` function.
+
 Surprisingly enough, the standard library doesn't define a `map()` function for dictionaries that allows to map both `keys` and `values` into a new `Dictionary`. Nevertheless, such a function can be helpful, for instance when converting data across different frameworks.
 
 ```swift
