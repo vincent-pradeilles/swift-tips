@@ -51,5 +51,6 @@
         <page name='48 - Providing a default value to a `Decodable` `enum`'/>
         <page name='49 - Using `Never` to represent impossible code paths'/>
         <page name='50 - Implementing a namespace through an empty `enum`'/>
+        <page name='51 - Defining a custom `init` without loosing the compiler-generated one'/>
     </pages>
 </playground>

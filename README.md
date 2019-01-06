@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#51 Defining a custom `init` without loosing the compiler-generated one](#defining-a-custom-init-without-loosing-the-compiler-generated-one)
 * [#50 Implementing a namespace through an empty `enum`](#implementing-a-namespace-through-an-empty-enum)
 * [#49 Using `Never` to represent impossible code paths](#using-never-to-represent-impossible-code-paths)
 * [#48 Providing a default value to a `Decodable` `enum`](#providing-a-default-value-to-a-decodable-enum)
@@ -56,6 +57,31 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Defining a custom `init` without loosing the compiler-generated one
+
+It's common knowledge for Swift developers that, when you define a `struct`, the compiler is going to automatically generate a memberwise `init` for you. That is, unless you also define an `init` of your own. Because then, the compiler won't generate any memberwise `init`.
+
+Yet, there are many instances where we might enjoy the opportunity to get both. As it turns out, this goal is quite easy to achieve: you just need to define your own `init` in an `extension` rather than inside the type definition itself.
+
+```swift
+import Foundation
+
+struct Point {
+    let x: Int
+    let y: Int
+}
+
+extension Point {
+    init() {
+        x = 0
+        y = 0
+    }
+}
+
+let usingDefaultInit = Point(x: 4, y: 3)
+let usingCustomInit = Point()
+```
 
 ## Implementing a namespace through an empty `enum`
 
