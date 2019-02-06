@@ -52,6 +52,7 @@
         <page name='49 - Using `Never` to represent impossible code paths'/>
         <page name='50 - Implementing a namespace through an empty `enum`'/>
         <page name='51 - Defining a custom `init` without loosing the compiler-generated one'/>
-        <page name='52 - Avoiding double negatives inside `guard` statements'/>
+        <page name='52 - Avoiding double negatives within `guard` statements'/>
+        <page name='53 - Using `switch` and `if` as expressions'/>
     </pages>
 </playground>
