@@ -4,6 +4,7 @@ The following is a collection of tips I find to be useful when working with the 
 
 # Summary
 
+* [#52 Avoiding double negatives within `guard` statements](#avoiding-double-negatives-within-guard-statements)
 * [#51 Defining a custom `init` without loosing the compiler-generated one](#defining-a-custom-init-without-loosing-the-compiler-generated-one)
 * [#50 Implementing a namespace through an empty `enum`](#implementing-a-namespace-through-an-empty-enum)
 * [#49 Using `Never` to represent impossible code paths](#using-never-to-represent-impossible-code-paths)
@@ -57,6 +58,30 @@ The following is a collection of tips I find to be useful when working with the 
 * [#01 Using map on optional values](#using-map-on-optional-values)
 
 # Tips
+
+## Avoiding double negatives within `guard` statements
+
+A `guard` statement is a very convenient way for the developer to assert that a condition is met, in order for the execution of the program to keep going.
+
+However, since the body of a `guard` statement is meant to be executed when the condition evaluates to `false`, the use of the negation (`!`) operator within the condition of a `guard` statement can make the code hard to read, as it becomes a double negative.
+
+A nice trick to avoid such double negatives is to encapsulate the use of the `!` operator within a new property or function, whose name does not include a negative.
+
+```swift
+import Foundation
+
+extension Collection {
+    var hasElements: Bool {
+        return !isEmpty
+    }
+}
+
+let array = Bool.random() ? [1, 2, 3] : []
+
+guard array.hasElements else { fatalError("array was empty") }
+
+print(array)
+```
 
 ## Defining a custom `init` without loosing the compiler-generated one
 
