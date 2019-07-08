@@ -1,6 +1,6 @@
 # SwiftTips
 
-The following is a collection of tips I find to be useful when working with the Swift language.
+The following is a collection of tips I find to be useful when working with the Swift language. More content is available on my [Twitter](https://twitter.com/v_pradeilles) account!
 
 # Summary
 
