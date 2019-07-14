@@ -1737,6 +1737,8 @@ counter() // returns 2
 
 ## Generating all cases for an Enum
 
+> ⚠️ Since Swift 4.2, `allCases` can now be synthesized at compile-time by simply conforming to the protocol `CaseIterable`. The implementation below should no longer be used in production code.
+
 Through some clever leveraging of how enums are stored in memory, it is possible to generate an array that contains all the possible cases of an enum. This can prove particularly useful when writing unit tests that consume random data.
 
 ```swift
