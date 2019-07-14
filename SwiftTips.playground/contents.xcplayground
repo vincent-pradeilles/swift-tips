@@ -54,5 +54,6 @@
         <page name='51 - Defining a custom `init` without loosing the compiler-generated one'/>
         <page name='52 - Avoiding double negatives within `guard` statements'/>
         <page name='53 - Using `switch` and `if` as expressions'/>
+        <page name='54 - Composing `NSAttributedString` through a Function Builder'/>
     </pages>
 </playground>
