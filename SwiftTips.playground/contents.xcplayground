@@ -55,5 +55,6 @@
         <page name='52 - Avoiding double negatives within `guard` statements'/>
         <page name='53 - Using `switch` and `if` as expressions'/>
         <page name='54 - Composing `NSAttributedString` through a Function Builder'/>
+        <page name='55 - Implementing pseudo-inheritance between `structs`'/>
     </pages>
 </playground>
