@@ -18,8 +18,6 @@ protocol Inherits {
     associatedtype SuperType
     
     var `super`: SuperType { get }
-    
-    subscript<T>(dynamicMember keyPath: KeyPath<SuperType, T>) -> T { get }
 }
 
 extension Inherits {
