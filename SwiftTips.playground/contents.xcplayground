@@ -56,5 +56,6 @@
         <page name='53 - Using `switch` and `if` as expressions'/>
         <page name='54 - Composing `NSAttributedString` through a Function Builder'/>
         <page name='55 - Implementing pseudo-inheritance between `structs`'/>
+        <page name='56 - Localization through `String` interpolation'/>
     </pages>
 </playground>
