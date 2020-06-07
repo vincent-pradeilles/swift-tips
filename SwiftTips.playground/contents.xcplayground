@@ -57,5 +57,6 @@
         <page name='54 - Composing `NSAttributedString` through a Function Builder'/>
         <page name='55 - Implementing pseudo-inheritance between `structs`'/>
         <page name='56 - Localization through `String` interpolation'/>
+        <page name='57 - Property Wrappers as Debugging Tools'/>
     </pages>
 </playground>
