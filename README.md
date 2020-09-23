@@ -2,10 +2,12 @@
 
 The following is a collection of tips I find to be useful when working with the Swift language. More content is available on my [Twitter](https://twitter.com/v_pradeilles) account!
 
+📣 NEW: Swift Tips are now available on [YouTube](https://www.youtube.com/playlist?list=PLdXMqVQnoFleH3GSuTUpr3Fjzp1JMy-je)
+
 # Summary
 
 * [#57 Property Wrappers as Debugging Tools](#property-wrappers-as-debugging-tools)
-* [#56 Localization through `String` interpolation](#localization-through-String-interpolation)
+* [#56 Localization through `String` interpolation](#localization-through-string-interpolation)
 * [#55 Implementing pseudo-inheritance between `structs`](#implementing-pseudo-inheritance-between-structs)
 * [#54 Composing `NSAttributedString` through a Function Builder](#composing-nsattributedstring-through-a-function-builder)
 * [#53 Using `switch` and `if` as expressions](#using-switch-and-if-as-expressions)
