@@ -2,7 +2,7 @@
 
 The following is a collection of tips I find to be useful when working with the Swift language. More content is available on my [Twitter](https://twitter.com/v_pradeilles) account!
 
-📣 NEW: Swift Tips are now available on [YouTube](https://www.youtube.com/playlist?list=PLdXMqVQnoFleH3GSuTUpr3Fjzp1JMy-je)
+📣 NEW 📣 Swift Tips are now available on [YouTube](https://www.youtube.com/playlist?list=PLdXMqVQnoFleH3GSuTUpr3Fjzp1JMy-je)
 
 # Summary
 
