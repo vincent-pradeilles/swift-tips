@@ -314,6 +314,8 @@ let usingDefaultInit = Point(x: 4, y: 3)
 let usingCustomInit = Point()
 ```
 
+[![](https://img.youtube.com/vi/IBQX3beJKiM/0.jpg)](https://www.youtube.com/watch?v=IBQX3beJKiM)
+
 ## Implementing a namespace through an empty `enum`
 
 Swift does not really have an out-of-the-box support of namespaces. One could argue that a Swift module can be seen as a namespace, but creating a dedicated Framework for this sole purpose can legitimately be regarded as overkill.
@@ -703,6 +705,8 @@ data.map(^\.int) // [2, 4]
 data.map(^\.string) // ["Foo", "Bar"]
 ```
 
+[![](https://img.youtube.com/vi/vnsKOxOrXnY/0.jpg)](https://www.youtube.com/watch?v=vnsKOxOrXnY)
+
 ## Bringing some type-safety to a `userInfo` `Dictionary`
 
 Many iOS APIs still rely on a `userInfo` `Dictionary` to handle use-case specific data. This `Dictionary` usually stores untyped values, and is declared as follows: `[String: Any]` (or sometimes `[AnyHashable: Any]`.
@@ -796,6 +800,8 @@ typealias Result<Value> = Either<Value, Error>
 
 typealias IntOrString = Either<Int, String>
 ```
+
+[![](https://img.youtube.com/vi/Z4ji0dpAkJA/0.jpg)](https://www.youtube.com/watch?v=Z4ji0dpAkJA)
 
 ## Writing an interruptible overload of `forEach`
 
@@ -1183,6 +1189,8 @@ label.text = "This is some text."
 doesNotWorkWithOptionalString(label.text.orEmpty)
 ```
 
+[![](https://img.youtube.com/vi/0lwxysw22GA/0.jpg)](https://www.youtube.com/watch?v=0lwxysw22GA)
+
 ## Encapsulating background computation and UI update
 
 Every seasoned iOS developers knows it: objects from `UIKit` can only be accessed from the main thread. Any attempt to access them from a background thread is a guaranteed crash. 
@@ -1451,6 +1459,8 @@ func foo() {
 foo() // [MyPlayground.playground:8] foo() - Hello world!
 ```
 
+[![](https://img.youtube.com/vi/KhZSmY2CqBk/0.jpg)](https://www.youtube.com/watch?v=KhZSmY2CqBk)
+
 ## Comparing Optionals through Conditional Conformance
 
 
@@ -1500,6 +1510,8 @@ let data = [1, 3, 4]
 data[safe: 1] // Optional(3)
 data[safe: 10] // nil
 ```
+
+[![](https://img.youtube.com/vi/wps0HYAbUK0/0.jpg)](https://www.youtube.com/watch?v=wps0HYAbUK0)
 
 ## Easier String slicing using ranges
 
@@ -1695,6 +1707,8 @@ let url: URL = "http://www.google.fr"
 
 NSURLConnection.canHandle(URLRequest(url: "http://www.google.fr"))
 ```
+
+[![](https://img.youtube.com/vi/RG4YXbQXhxY/0.jpg)](https://www.youtube.com/watch?v=RG4YXbQXhxY)
 
 ## Achieving systematic validation of data
 
@@ -1916,3 +1930,5 @@ label.text = date.map { return formatter.string(from: $0) }
 
 label.text = date.map(formatter.string(from:)) // even shorter, tough less readable
 ```
+
+[![](https://img.youtube.com/vi/vnsKOxOrXnY/0.jpg)](https://www.youtube.com/watch?v=vnsKOxOrXnY)
