@@ -1,3 +1,7 @@
+# Warning
+
+⚠️ This repo is a few years old, I've moved my tips collection to my website 👉 [https://www.swiftwithvincent.com/tips](https://www.swiftwithvincent.com/tips) ⚠️
+
 # SwiftTips
 
 The following is a collection of tips I find to be useful when working with the Swift language. More content is available on my [Twitter](https://twitter.com/v_pradeilles) account!
